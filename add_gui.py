@@ -3,16 +3,17 @@ import expense
 import defaults
 from expense import Expense
 
-new_expense = Expense()
+current_expense = Expense()
 
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-class GUI:
+class ADD_GUI:
 
   def __init__(self,name1='Gary',name2='Karen'):
     
     self.root = tk.Tk()
     self.root.geometry("469x575")
     self.root.title("Add expenses")
+    self.list_of_expenses = []
     
     
     #text_item = tk.Text(self.root,height=2,width=16,font=("Arial", 24))
@@ -86,11 +87,11 @@ class GUI:
 
     self.summary_label = tk.Label(self.root,text=f'Summary')
     self.summary_label.pack()
-    self.category_label = tk.Label(self.root,text=f'Category: {new_expense.category}')
+    self.category_label = tk.Label(self.root,text=f'Category: {current_expense.category}')
     self.category_label.pack()
-    self.item_label = tk.Label(self.root,text=f'Item: {new_expense.item}')
+    self.item_label = tk.Label(self.root,text=f'Item: {current_expense.item}')
     self.item_label.pack()
-    self.amount_label = tk.Label(self.root,text=f'Amount: {new_expense.amount} GBP')
+    self.amount_label = tk.Label(self.root,text=f'Amount: {current_expense.amount} GBP')
     self.amount_label.pack()
     self.ipf_label = tk.Label(self.root,text=f'Paid by: -')
     self.ipf_label.pack()
@@ -98,19 +99,27 @@ class GUI:
 
     clear_btn = tk.Button(self.root,text='Clear',command= self.clear_expense,font=('Arial',16))
     clear_btn.pack()
-    add_btn = tk.Button(self.root,text='Add',command= self.add_expense_to_df,font=('Arial',16))
+    add_btn = tk.Button(self.root,text='Add',command= self.add_expense_to_list,font=('Arial',16))
     add_btn.pack()
 
+    save_btn = tk.Button(self.root,text='Save to DB',font=('Arial',16))
+    save_btn.pack()
+    close_btn = tk.Button(self.root,text='Close',font=('Arial',16))
+    close_btn.pack()
+
     self.root.mainloop()
+    for i in self.list_of_expenses:
+      print(f'{i.category} {i.item} {i.amount}')
 
     
 #<><><><><><><><><><><><><><
 
   def pre_populate_category(self,_value):
+    global current_expense
     print('----')
-    if (new_expense.category != _value):
-      new_expense.reset()
-    new_expense.add_category(_value)
+    if (current_expense.category != _value):
+      current_expense.reset()
+    current_expense.add_category(_value)
 
     item1,item2,item3,item4,item5,item6,item7,item8,item9 = defaults.items[_value] 
     self.btn_item1['text'] = item1      
@@ -136,35 +145,40 @@ class GUI:
 
 
   def pre_populate_item(self,_value):
-    if (new_expense.item != _value):
-      new_expense.reset(keep_cat=True)
-    new_expense.add_item(_value)
+    global current_expense
+    if (current_expense.item != _value):
+      current_expense.reset(keep_cat=True)
+    current_expense.add_item(_value)
     #add default prices
     if _value in defaults.values.keys():
-      new_expense.add_amount(defaults.values[_value])
+      current_expense.add_amount(defaults.values[_value])
     else:
-      new_expense.add_amount(0.00)
+      current_expense.add_amount(0.00)
     
     self.update_summary()
 
   def update_summary(self):
-    self.category_label['text']=f'category: {new_expense.category}'
-    self.item_label['text']=f'Item: {new_expense.item}'
+    global current_expense
+    self.category_label['text']=f'category: {current_expense.category}'
+    self.item_label['text']=f'Item: {current_expense.item}'
     text_value = tk.StringVar()
-    text_value.set(new_expense.amount)
+    text_value.set(current_expense.amount)
     self.amount_label['text']=f'Amount: {text_value.get()} GPB'
     self.ipf_label['text']=f'Paid by: {text_value.get()} GPB'
     self.entry_amount['textvariable'] = text_value
    
   def clear_expense(self):
-    new_expense.reset()
+    global current_expense
+    current_expense.reset()
     self.update_summary()
    
-  def add_expense_to_df(self):
-    print(f'{self.entry_amount.get()}     {new_expense.amount}')
-    pass
-    #call new_expense.add_to_df(self.df) , i.e., passing self.df to it.
+  def add_expense_to_list(self):
+    global current_expense
+    self.list_of_expenses.append(current_expense)
+    current_expense = Expense(category=current_expense.category)
+    self.update_summary()
 
 
 #><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-GUI(name1='ElPeri',name2='LaPira')
+if __name__ == '__main__':
+  ADD_GUI(name1='ElPeri',name2='LaPira')
