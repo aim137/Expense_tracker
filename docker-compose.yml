@@ -1,0 +1,12 @@
+version: '3'
+services:
+  python3:
+    build: .
+    container_name: 'python3-expensetracker'
+    stdin_open: true
+    working_dir: '/usr/src/app'
+    tty: true
+    volumes:
+      - ${SRC_PATH}:/usr/src/app
+    environment:
+      - DISPLAY=192.168.1.11:0.0
