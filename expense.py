@@ -1,6 +1,26 @@
 import datetime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine
+from sqlalchemy import Column, String, Integer, Float, Boolean
 
-class Expense:
+
+Base = declarative_base()
+
+class Expense(Base):
+
+  __tablename__ = "Expenses"
+
+  item     = Column("Item", String)
+  category = Column("Category", String)
+  amount   = Column("Amount", Float)
+  ipf      = Column("Ipf", Float)
+  spf      = Column("Spf", Float)
+  date     = Column("Date", String)
+  comment  = Column("Comment", String)
+  balance  = Column("Balance", Float)
+  is_paid  = Column("IsPaid", Boolean)
+  key      = Column("Key", String, primary_key=True)
+
 
   def __init__(self,item=None,category=None,amount=None,ipf=None,spf=0.5,date=None,comment=None):
     """
@@ -9,7 +29,7 @@ class Expense:
     spf stands for 'should've paid fraction' and it's 0.5 if the cost is spread evenly.
     when calculating the balance, we do amount*(ipf - spf) (positive means your partner owes you)
     """
-#   if item is None or amount is None or ipf is None: raise NameError("The fields item, amount and ipf are mandatory")    
+
     if item is not None:
       self.item = item
     else:
@@ -34,6 +54,8 @@ class Expense:
 
     self.ipf = ipf
     self.spf = spf
+    self.is_paid = False
+    self.key = datetime.datetime.today().strftime('%Y%m%d-%H.%M.%S')
    
 
 
@@ -56,11 +78,15 @@ class Expense:
     self.comment = '-'
   
   
-  def add_to_df(self,df):
-    if self.item == '-' : raise NameError("The field item is mandatory")
-    if self.category == '-' : raise NameError("The field category is mandatory")
-    if self.amount == 0.00 : raise NameError("The field amount must be greater than zero")
-    if self.item == '-' : raise NameError("The field ipf is mandatory")
-    if (ipf < 0 ) or (ipf > 1): raise ValueError("ipf should be between 0 and 1")
+  def prepare_to_save(self):
+    if self.item == '-' : return False
+    if self.category == '-' : return False
+    if self.amount == 0.00 : return False
+    if self.ipf == '-' : return False
+    if (self.ipf < 0 ) or (self.ipf > 1): return False
     self.balance = self.amount*(self.ipf - self.spf)
+    return True
     #and now add to the df
+
+  def __repr__(self):
+    return f'{self.category}  {self.item}  {self.amount} GBP  {self.balance}  Paid= {self.is_paid}'

@@ -55,8 +55,8 @@ default_memberships = (
 )
 default_other = (
 'Purchases',
-'Other',
-'Other',
+'Amazon',
+'Ebay',
 'Other',
 'Other',
 'Other',

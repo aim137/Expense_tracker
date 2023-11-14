@@ -2,6 +2,7 @@ import tkinter as tk
 import expense
 import defaults
 from expense import Expense
+from functions import load_sqlsession
 
 current_expense = Expense()
 
@@ -14,6 +15,8 @@ class ADD_GUI:
     self.root.geometry("469x575")
     self.root.title("Add expenses")
     self.list_of_expenses = []
+    self.name1 = name1
+    self.name2 = name2
     
     
     #text_item = tk.Text(self.root,height=2,width=16,font=("Arial", 24))
@@ -73,11 +76,11 @@ class ADD_GUI:
     self.entry_amount = tk.Entry(self.root,textvariable=text_value,font=('Arial',18))
     self.entry_amount.pack()
 
-    ipf = tk.IntVar() #Groups radiobuttongs together if they share the same variable
-    ipf.set(1)
-    self.whopays = tk.Radiobutton(self.root,text=name1,variable=ipf,value=1)
+    self.ipf = tk.IntVar() #Groups radiobuttons together if they share the same variable
+    self.ipf.set(1)
+    self.whopays = tk.Radiobutton(self.root,text=self.name1,variable=self.ipf,value=1)
     self.whopays.pack()
-    self.whopays = tk.Radiobutton(self.root,text=name2,variable=ipf,value=0)
+    self.whopays = tk.Radiobutton(self.root,text=self.name2,variable=self.ipf,value=0)
     self.whopays.pack()
     
     text_comment = tk.StringVar()
@@ -102,14 +105,12 @@ class ADD_GUI:
     add_btn = tk.Button(self.root,text='Add',command= self.add_expense_to_list,font=('Arial',16))
     add_btn.pack()
 
-    save_btn = tk.Button(self.root,text='Save to DB',font=('Arial',16))
+    save_btn = tk.Button(self.root,text='Save to DB',command=self.save_to_db,font=('Arial',16))
     save_btn.pack()
-    close_btn = tk.Button(self.root,text='Close',font=('Arial',16))
+    close_btn = tk.Button(self.root,text='Close',command=self.close_add_gui,font=('Arial',16))
     close_btn.pack()
 
     self.root.mainloop()
-    for i in self.list_of_expenses:
-      print(f'{i.category} {i.item} {i.amount}')
 
     
 #<><><><><><><><><><><><><><
@@ -164,7 +165,8 @@ class ADD_GUI:
     text_value = tk.StringVar()
     text_value.set(current_expense.amount)
     self.amount_label['text']=f'Amount: {text_value.get()} GPB'
-    self.ipf_label['text']=f'Paid by: {text_value.get()} GPB'
+    if self.ipf.get() == 1 : self.ipf_label['text']=f'Paid by: {self.name1}'
+    if self.ipf.get() == 0 : self.ipf_label['text']=f'Paid by: {self.name2}'
     self.entry_amount['textvariable'] = text_value
    
   def clear_expense(self):
@@ -174,11 +176,32 @@ class ADD_GUI:
    
   def add_expense_to_list(self):
     global current_expense
-    self.list_of_expenses.append(current_expense)
-    current_expense = Expense(category=current_expense.category)
-    self.update_summary()
+    current_expense.ipf = self.ipf.get()
+    should_add = current_expense.prepare_to_save()
+    print(current_expense)
+    if should_add:
+      self.list_of_expenses.append(current_expense)
+      current_expense = Expense(category=current_expense.category)
+      self.update_summary()
+    else:
+      raise ValueError
+      #aim137 cambiar esto por algun mensaje
+
+  def save_to_db(self):
+    session = load_sqlsession()
+    for exp in self.list_of_expenses:
+      session.add(exp)
+    session.commit()
+    self.saved_ok = True
+
+  def close_add_gui(self):
+    if self.saved_ok:
+      self.root.destroy()
+    else:
+      pass
+      #aim137 poner un mensaje aca
 
 
 #><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 if __name__ == '__main__':
-  ADD_GUI(name1='ElPeri',name2='LaPira')
+  ADD_GUI()
