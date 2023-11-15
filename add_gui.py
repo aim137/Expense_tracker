@@ -17,15 +17,12 @@ class ADD_GUI:
     self.list_of_expenses = []
     self.name1 = name1
     self.name2 = name2
+    current_expense.amount_string = ''
     
     
-    #text_item = tk.Text(self.root,height=2,width=16,font=("Arial", 24))
-    #text_item.grid(columnspan=5)
-    #hola = tk.Menubutton(self.root)
-    #hola.grid(columnspan=5)
-    
-    label = tk.Label(self.root, text="Choose category:",font=('Arial',18))
-    label.pack()
+    # Category
+    label_cat = tk.Label(self.root, text="Choose category:",font=('Arial',18))
+    label_cat.pack()
     
     buttonframe_cat = tk.Frame(self.root)
     buttonframe_cat.columnconfigure(0,weight=1)
@@ -46,6 +43,10 @@ class ADD_GUI:
     
     buttonframe_cat.pack(fill='x')
     
+    # Item
+    label_item = tk.Label(self.root, text="Choose item:",font=('Arial',18))
+    label_item.pack()
+
     buttonframe_item = tk.Frame(self.root)
     buttonframe_item.columnconfigure(0,weight=1)
     buttonframe_item.columnconfigure(1,weight=1)
@@ -71,10 +72,44 @@ class ADD_GUI:
 
     buttonframe_item.pack(fill='x')
     
-    text_value = tk.StringVar()
-    text_value.set('')
-    self.entry_amount = tk.Entry(self.root,textvariable=text_value,font=('Arial',18))
-    self.entry_amount.pack()
+    # Amount
+    label_amount = tk.Label(self.root, text="Choose amount:",font=('Arial',18))
+    label_amount.pack()
+    
+    buttonframe_amount = tk.Frame(self.root)
+    buttonframe_amount.columnconfigure(0,weight=1)
+    buttonframe_amount.columnconfigure(1,weight=1)
+    
+    self.btn_amount1 = tk.Button(buttonframe_amount, text='1',command=lambda: self.concatenate_amount('1'))
+    self.btn_amount1.grid(row=0,column=1,sticky=tk.W+tk.E)
+    self.btn_amount2 = tk.Button(buttonframe_amount, text='2',command=lambda: self.concatenate_amount('2'))
+    self.btn_amount2.grid(row=0,column=2,sticky=tk.W+tk.E)
+    self.btn_amount3 = tk.Button(buttonframe_amount, text='3',command=lambda: self.concatenate_amount('3'))
+    self.btn_amount3.grid(row=0,column=3,sticky=tk.W+tk.E)
+    self.btn_amount4 = tk.Button(buttonframe_amount, text='4',command=lambda: self.concatenate_amount('4'))
+    self.btn_amount4.grid(row=1,column=1,sticky=tk.W+tk.E)
+    self.btn_amount5 = tk.Button(buttonframe_amount, text='5',command=lambda: self.concatenate_amount('5'))
+    self.btn_amount5.grid(row=1,column=2,sticky=tk.W+tk.E)
+    self.btn_amount6 = tk.Button(buttonframe_amount, text='6',command=lambda: self.concatenate_amount('6'))
+    self.btn_amount6.grid(row=1,column=3,sticky=tk.W+tk.E)
+    self.btn_amount7 = tk.Button(buttonframe_amount, text='7',command=lambda: self.concatenate_amount('7'))
+    self.btn_amount7.grid(row=2,column=1,sticky=tk.W+tk.E)
+    self.btn_amount8 = tk.Button(buttonframe_amount, text='8',command=lambda: self.concatenate_amount('8'))
+    self.btn_amount8.grid(row=2,column=2,sticky=tk.W+tk.E)
+    self.btn_amount9 = tk.Button(buttonframe_amount, text='9',command=lambda: self.concatenate_amount('9'))
+    self.btn_amount9.grid(row=2,column=3,sticky=tk.W+tk.E)
+    self.btn_amount10 = tk.Button(buttonframe_amount, text='.',command=lambda: self.concatenate_amount('.'))
+    self.btn_amount10.grid(row=3,column=1,sticky=tk.W+tk.E)
+    self.btn_amount11 = tk.Button(buttonframe_amount, text='0',command=lambda: self.concatenate_amount('0'))
+    self.btn_amount11.grid(row=3,column=2,sticky=tk.W+tk.E)
+    self.btn_amount12 = tk.Button(buttonframe_amount, text='Del',command=self.backspace_amount)
+    self.btn_amount12.grid(row=3,column=3,sticky=tk.W+tk.E)
+
+    buttonframe_amount.pack(fill='x')
+    
+    #Who paid
+    label_whopaid = tk.Label(self.root, text="Who paid:",font=('Arial',18))
+    label_whopaid.pack()
 
     self.ipf = tk.IntVar() #Groups radiobuttons together if they share the same variable
     self.ipf.set(1)
@@ -117,7 +152,6 @@ class ADD_GUI:
 
   def pre_populate_category(self,_value):
     global current_expense
-    print('----')
     if (current_expense.category != _value):
       current_expense.reset()
     current_expense.add_category(_value)
@@ -157,27 +191,41 @@ class ADD_GUI:
       current_expense.add_amount(0.00)
     
     self.update_summary()
+ 
+  def concatenate_amount(self,_string):
+    global current_expense
+    if _string == '.' and _string in current_expense.amount_string: return
+    current_expense.amount_string += _string
+    current_expense.amount = float(current_expense.amount_string)
+    self.update_summary()
+    print(current_expense.amount_string)
+ 
+  def backspace_amount(self):
+    global current_expense
+    current_expense.amount_string = current_expense.amount_string[:-1]
+    current_expense.amount = float(current_expense.amount_string)
+    self.update_summary()
+
 
   def update_summary(self):
     global current_expense
     self.category_label['text']=f'category: {current_expense.category}'
     self.item_label['text']=f'Item: {current_expense.item}'
-    text_value = tk.StringVar()
-    text_value.set(current_expense.amount)
-    self.amount_label['text']=f'Amount: {text_value.get()} GPB'
+    self.amount_label['text']=f'Amount: {current_expense.amount:.2f} GPB'
     if self.ipf.get() == 1 : self.ipf_label['text']=f'Paid by: {self.name1}'
     if self.ipf.get() == 0 : self.ipf_label['text']=f'Paid by: {self.name2}'
-    self.entry_amount['textvariable'] = text_value
+  # self.entry_amount['textvariable'] = text_value
    
   def clear_expense(self):
     global current_expense
     current_expense.reset()
+    current_expense.amount_string = ''
     self.update_summary()
    
   def add_expense_to_list(self):
     global current_expense
     current_expense.ipf = self.ipf.get()
-    should_add = current_expense.prepare_to_save()
+    should_add = current_expense.prepare_to_save(self.name1,self.name2)
     print(current_expense)
     if should_add:
       self.list_of_expenses.append(current_expense)
@@ -199,7 +247,7 @@ class ADD_GUI:
       self.root.destroy()
     else:
       pass
-      #aim137 poner un mensaje aca
+      #aim137 cambiar esto por algun mensaje
 
 
 #><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>

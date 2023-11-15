@@ -56,6 +56,8 @@ class Expense(Base):
     self.spf = spf
     self.is_paid = False
     self.key = datetime.datetime.today().strftime('%Y%m%d-%H.%M.%S')
+    self.amount_string = ''
+    self.name = 'TBD'
    
 
 
@@ -76,17 +78,20 @@ class Expense(Base):
     self.item = '-'
     self.amount = 0.00
     self.comment = '-'
+    self.amount_string = ''
   
   
-  def prepare_to_save(self):
+  def prepare_to_save(self,name1,name2):
     if self.item == '-' : return False
     if self.category == '-' : return False
     if self.amount == 0.00 : return False
     if self.ipf == '-' : return False
     if (self.ipf < 0 ) or (self.ipf > 1): return False
     self.balance = self.amount*(self.ipf - self.spf)
+    if self.ipf == 1: self.name = name1
+    if self.ipf == 0: self.name = name2
     return True
     #and now add to the df
 
   def __repr__(self):
-    return f'{self.category}  {self.item}  {self.amount} GBP  {self.balance}  Paid= {self.is_paid}'
+    return f'{self.category.ljust(10)} {self.item.ljust(10)} : {self.amount:.2f} GBP paid by {self.name.ljust(10)} - Net={self.balance:.2f} GBP Paid={self.is_paid} Comment={self.comment}'
