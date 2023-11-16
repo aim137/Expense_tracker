@@ -10,14 +10,12 @@ current_expense = Expense()
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 class ADD_GUI:
 
-  def __init__(self,name1='Gary',name2='Karen'):
+  def __init__(self):
     
     self.root = tk.Tk()
     self.root.geometry("469x675")
     self.root.title("Add expenses")
     self.list_of_expenses = []
-    self.name1 = name1
-    self.name2 = name2
     self.saved_ok = False
     current_expense.amount_string = ''
     
@@ -118,9 +116,9 @@ class ADD_GUI:
 
     self.ipf = tk.IntVar() #Groups radiobuttons together if they share the same variable
     self.ipf.set(1)
-    self.whopays = tk.Radiobutton(self.root,text=self.name1,variable=self.ipf,value=1,command=self.update_ipf)
+    self.whopays = tk.Radiobutton(self.root,text=defaults.name1,variable=self.ipf,value=1,command=self.update_ipf)
     self.whopays.pack()
-    self.whopays = tk.Radiobutton(self.root,text=self.name2,variable=self.ipf,value=0,command=self.update_ipf)
+    self.whopays = tk.Radiobutton(self.root,text=defaults.name2,variable=self.ipf,value=0,command=self.update_ipf)
     self.whopays.pack()
     
     text_comment = tk.StringVar()
@@ -235,8 +233,8 @@ class ADD_GUI:
     self.category_label['text']=f'category: {current_expense.category}'
     self.item_label['text']=f'Item: {current_expense.item}'
     self.amount_label['text']=f'Amount: {current_expense.amount:.2f} GPB'
-    if self.ipf.get() == 1 : self.ipf_label['text']=f'Paid by: {self.name1}'
-    if self.ipf.get() == 0 : self.ipf_label['text']=f'Paid by: {self.name2}'
+    if self.ipf.get() == 1 : self.ipf_label['text']=f'Paid by: {defaults.name1}'
+    if self.ipf.get() == 0 : self.ipf_label['text']=f'Paid by: {defaults.name2}'
    
   def clear_expense(self):
     global current_expense
@@ -249,7 +247,7 @@ class ADD_GUI:
     global current_expense
     current_expense.ipf = self.ipf.get()
     current_expense.comment = self.entry_comment.get()
-    should_add = current_expense.prepare_to_save(self.name1,self.name2)
+    should_add = current_expense.prepare_to_save()
     print(current_expense)
     if should_add:
       self.list_of_expenses.append(current_expense)

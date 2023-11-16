@@ -1,5 +1,4 @@
 import tkinter as tk
-#from add_gui import ADD_GUI
 from add_gui import ADD_GUI
 from rep_gui import REP_GUI
 from bnc_gui import BNC_GUI

@@ -1,4 +1,5 @@
 import datetime
+import defaults
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import Column, String, Integer, Float, Boolean
@@ -82,17 +83,17 @@ class Expense(Base):
     self.amount_string = ''
   
   
-  def prepare_to_save(self,name1,name2):
+  def prepare_to_save(self):
     if self.item == '-' : return False
     if self.category == '-' : return False
     if self.amount == 0.00 : return False
     if self.ipf == '-' : return False
     if (self.ipf < 0 ) or (self.ipf > 1): return False
     self.balance = self.amount*(self.ipf - self.spf)
-    if self.ipf == 1: self.name = name1
-    if self.ipf == 0: self.name = name2
+    if self.ipf == 1: self.name = defaults.name1
+    if self.ipf == 0: self.name = defaults.name2
     return True
     #and now add to the df
 
   def __repr__(self):
-    return f'{self.category.ljust(13)} {self.item.ljust(13)} : {self.amount: 8.2f} GBP paid by {self.name.ljust(10)} - Net={self.balance: 8.2f} GBP Paid={self.is_paid} Comment={self.comment}'
+    return f'{self.category.ljust(13)} {self.item.ljust(13)} : {self.amount: 8.2f} GBP paid by {self.name.ljust(10)} on {self.date.ljust(13)}- Net={self.balance: 8.2f} GBP Paid={self.is_paid} Comment={self.comment}'

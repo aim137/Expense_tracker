@@ -1,3 +1,6 @@
+name1 = "Gary"
+name2 = "Karen"
+
 default_bills = (
 'Rent/Mortgage',
 'Co. Tax',
