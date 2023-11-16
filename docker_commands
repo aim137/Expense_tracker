@@ -1,9 +1,0 @@
-#generate image
-
-docker build -t python-expensetracker .
-
-#run image
-
-docker run -t python-expensetracker
-
-

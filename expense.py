@@ -15,6 +15,7 @@ class Expense(Base):
   amount   = Column("Amount", Float)
   ipf      = Column("Ipf", Float)
   spf      = Column("Spf", Float)
+  name     = Column("Name", String)
   date     = Column("Date", String)
   comment  = Column("Comment", String)
   balance  = Column("Balance", Float)
@@ -50,7 +51,7 @@ class Expense(Base):
     if comment is not None:
       self.comment = comment
     else:
-      self.comment = '-'
+      self.comment = ''
 
     self.ipf = ipf
     self.spf = spf
@@ -77,7 +78,7 @@ class Expense(Base):
     if not keep_cat: self.category = '-'
     self.item = '-'
     self.amount = 0.00
-    self.comment = '-'
+    self.comment = ''
     self.amount_string = ''
   
   
@@ -94,4 +95,4 @@ class Expense(Base):
     #and now add to the df
 
   def __repr__(self):
-    return f'{self.category.ljust(10)} {self.item.ljust(10)} : {self.amount:.2f} GBP paid by {self.name.ljust(10)} - Net={self.balance:.2f} GBP Paid={self.is_paid} Comment={self.comment}'
+    return f'{self.category.ljust(13)} {self.item.ljust(13)} : {self.amount: 8.2f} GBP paid by {self.name.ljust(10)} - Net={self.balance: 8.2f} GBP Paid={self.is_paid} Comment={self.comment}'

@@ -4,9 +4,7 @@ from add_gui import ADD_GUI
 from rep_gui import REP_GUI
 from bnc_gui import BNC_GUI
 
-# create persistent DB if not present
-
-# driver windor
+# driver window
  
 driver = tk.Tk()
 driver.title('Expense tracker')
