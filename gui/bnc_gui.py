@@ -1,7 +1,7 @@
 import tkinter as tk
 from expensetracker.xp.expense import Expense
 from expensetracker.xp import defaults
-from expensetracker.xp.functions import load_sqlsession
+from expensetracker.xp.functions import load_sqlsession,get_unpaid_data
 from tkinter.messagebox import showinfo
 
 
@@ -14,7 +14,7 @@ class BNC_GUI():
     self.root.title("Calculate balance")
 
     self.session = load_sqlsession()
-    self.query,self.lof_exp = self.get_unpaid_data()
+    self.query,self.lof_exp = get_unpaid_data(self.session)
     self.total_balance = self.calculate_balance()
 
     self.label_balance = tk.Label(self.root,text=f'Balance: {self.total_balance:.2f} GPB',font=('Arial',18))
@@ -41,10 +41,11 @@ class BNC_GUI():
 
     self.root.mainloop()
 
-  def get_unpaid_data(self):
-    _q =  self.session.query(Expense).filter(Expense.is_paid == False)
-    _l = _q.all()
-    return _q,_l
+# better imported from functions
+# def get_unpaid_data(self):
+#   _q =  self.session.query(Expense).filter(Expense.is_paid == False)
+#   _l = _q.all()
+#   return _q,_l
     
   def calculate_balance(self):
     _balance = 0 
@@ -55,8 +56,6 @@ class BNC_GUI():
   def mark_as_paid(self):
     self.query.update({Expense.is_paid :True})#,synchronize_session='evaluate')
     self.session.commit()
-
-
     self.root.destroy()
 
 

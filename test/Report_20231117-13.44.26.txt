@@ -1,0 +1,9 @@
+Bills         Co. Tax       :   180.00 GBP paid by Gary       on 2023-11-17   - Net=   90.00 GBP Paid=False Comment=
+Bills         Water         :    41.00 GBP paid by Gary       on 2023-11-17   - Net=   20.50 GBP Paid=False Comment=
+Bills         House Insurance :   155.00 GBP paid by Gary       on 2023-11-17   - Net=   77.50 GBP Paid=False Comment=
+Memberships   Amazon Prime  :    58.00 GBP paid by Gary       on 2023-11-17   - Net=   29.00 GBP Paid=False Comment=
+Transport     Parking       :     5.00 GBP paid by Gary       on 2023-11-17   - Net=    2.50 GBP Paid=False Comment=
+Leisure       Hotels        :   222.00 GBP paid by Gary       on 2023-11-17   - Net=  111.00 GBP Paid=False Comment=
+Bills         Rent/Mortgage :   555.00 GBP paid by Gary       on 2023-11-17   - Net=  277.50 GBP Paid=False Comment=
+Bills         Phone         :    25.00 GBP paid by Gary       on 2023-11-17   - Net=   12.50 GBP Paid=False Comment=
+Other         Purchases     :   237.00 GBP paid by Gary       on 2023-11-17   - Net=  118.50 GBP Paid=False Comment=

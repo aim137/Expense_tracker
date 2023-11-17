@@ -1,6 +1,6 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from expensetracker.xp.expense import Base
+from expensetracker.xp.expense import Base, Expense
 from expensetracker.xp import defaults
 
 def load_sqlsession():
@@ -10,5 +10,8 @@ def load_sqlsession():
   Session = sessionmaker(bind=engine)
   session = Session()
   return session
-  
 
+def get_unpaid_data(session):
+  _q =  session.query(Expense).filter(Expense.is_paid == False)
+  _l = _q.all()
+  return _q,_l

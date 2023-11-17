@@ -1,4 +1,4 @@
-# Crypto trading bot
+# Expense tracker GUI
 
 This is a python application to track expenses and split costs with another person.
  
