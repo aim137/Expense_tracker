@@ -10,12 +10,12 @@ clone repo
 cd to repo
 pip install -e .
 ```
-Make sure to edit xp/defaults.py with your names and default expenses.
+Make sure to edit ./xp/defaults.py with your names and default expenses.
 
 ## Usage
 
 ```python
-from expensetracker.driver import run
+from expensetracker.xp.driver import run
 
 run()
 
