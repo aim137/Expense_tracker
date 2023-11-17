@@ -1,0 +1,21 @@
+Bills         Co. Tax       :   180.00 GBP paid by Gary       on 2023-11-17   - Net=   90.00 GBP Paid=False Comment=
+Bills         Water         :    41.00 GBP paid by Karen      on 2023-11-17   - Net=  -20.50 GBP Paid=False Comment=
+Bills         Wifi          :    56.00 GBP paid by Karen      on 2023-11-17   - Net=  -28.00 GBP Paid=False Comment=
+Bills         Gas & Elec    :   170.00 GBP paid by Karen      on 2023-11-17   - Net=  -85.00 GBP Paid=False Comment=
+Bills         Phone         :    16.00 GBP paid by Gary       on 2023-11-17   - Net=    8.00 GBP Paid=False Comment=
+Groceries     Tesco         :   250.00 GBP paid by Karen      on 2023-11-17   - Net= -125.00 GBP Paid=False Comment=
+Transport     Petrol        :    56.40 GBP paid by Gary       on 2023-11-17   - Net=   28.20 GBP Paid=False Comment=
+Transport     Parking       :     5.50 GBP paid by Gary       on 2023-11-17   - Net=    2.75 GBP Paid=False Comment=
+Transport     Parking       :     5.50 GBP paid by Gary       on 2023-11-17   - Net=    2.75 GBP Paid=False Comment=
+Memberships   Netflix       :     7.20 GBP paid by Karen      on 2023-11-17   - Net=   -3.60 GBP Paid=False Comment=
+Memberships   Youtube       :     6.99 GBP paid by Gary       on 2023-11-17   - Net=    3.50 GBP Paid=False Comment=
+Leisure       Flights       :   262.00 GBP paid by Gary       on 2023-11-17   - Net=  131.00 GBP Paid=False Comment=
+Leisure       Hotels        :   322.00 GBP paid by Gary       on 2023-11-17   - Net=  161.00 GBP Paid=False Comment=
+Leisure       Coffee        :    15.00 GBP paid by Karen      on 2023-11-17   - Net=   -7.50 GBP Paid=False Comment=
+Leisure       Food          :    61.00 GBP paid by Gary       on 2023-11-17   - Net=   30.50 GBP Paid=False Comment=
+Other         Amazon        :    29.99 GBP paid by Gary       on 2023-11-17   - Net=   14.99 GBP Paid=False Comment=
+Other         Amazon        :    78.00 GBP paid by Karen      on 2023-11-17   - Net=  -39.00 GBP Paid=False Comment=
+Memberships   Amazon Prime  :     4.99 GBP paid by Gary       on 2023-11-17   - Net=    2.50 GBP Paid=False Comment=
+Memberships   TV license    :    17.00 GBP paid by Gary       on 2023-11-17   - Net=    8.50 GBP Paid=False Comment=
+Memberships   Club          :    20.00 GBP paid by Gary       on 2023-11-17   - Net=   10.00 GBP Paid=False Comment=
+Memberships   Gym           :    39.00 GBP paid by Karen      on 2023-11-17   - Net=  -19.50 GBP Paid=False Comment=

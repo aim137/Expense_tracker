@@ -67,6 +67,7 @@ class REP_GUI():
            labels=X, 
            explode=explode,
            autopct='%1.1f%%',
+           colors=['tomato','cornflowerblue','gold','orchid','green',"#77BFE2"]
           )
     fig.savefig(f'Plot_{self.tag}.pdf')
 

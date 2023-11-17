@@ -6,7 +6,7 @@ from expensetracker.gui.bnc_gui import BNC_GUI
 def run():
   # driver window
   driver = tk.Tk()
-  driver.geometry("229x237")
+  driver.geometry("229x297")
   driver.title('Expense tracker')
   
   btn_add = tk.Button(driver,text="Add Expenses",font=('Arial',20),command=ADD_GUI)
@@ -17,6 +17,9 @@ def run():
   
   btn_balance = tk.Button(driver,text="Pay Balance",font=('Arial',20),command=BNC_GUI)
   btn_balance.pack(padx=20,pady=20)
+
+  btn_close = tk.Button(driver,text="Close",font=('Arial',18),command=driver.destroy)
+  btn_close.pack(padx=20,pady=20)
   
   driver.mainloop()
 

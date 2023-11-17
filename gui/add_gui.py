@@ -256,7 +256,10 @@ class ADD_GUI:
     print(current_expense)
     if should_add:
       self.list_of_expenses.append(current_expense)
-      current_expense = xp.Expense(category=current_expense.category)
+      current_expense = xp.Expense(
+          category=current_expense.category,
+          ipf=current_expense.ipf
+          ) #The idea is to keep those two parameters from the previous expense
       self.update_summary()
       self.entry_comment.delete(0,"end")
     else:
