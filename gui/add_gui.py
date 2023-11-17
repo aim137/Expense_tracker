@@ -113,11 +113,14 @@ class ADD_GUI:
     label_whopaid = tk.Label(self.root, text="Who paid:",font=('Arial',18))
     label_whopaid.pack()
 
+    # Note: I cannot use this variable in as normal because of known issues of tkinker when using Radiobuttons in 
+    # second windows. As it was coded, it worked well if I did `python gui/add_gui.py` but it failed to update if 
+    # I did `python driver`. Solution proposed here did not work (https://copyprogramming.com/howto/default-radio-button-not-working-in-second-tkinter-window).
     self.ipf = tk.IntVar() #Groups radiobuttons together if they share the same variable
     self.ipf.set(1)
-    self.whopays = tk.Radiobutton(self.root,text=defaults.name1,variable=self.ipf,value=1,command=self.update_ipf)
+    self.whopays = tk.Radiobutton(self.root,text=defaults.name1,variable=self.ipf,value=1,command=lambda: self.update_ipf(1))
     self.whopays.pack()
-    self.whopays = tk.Radiobutton(self.root,text=defaults.name2,variable=self.ipf,value=0,command=self.update_ipf)
+    self.whopays = tk.Radiobutton(self.root,text=defaults.name2,variable=self.ipf,value=0,command=lambda: self.update_ipf(0))
     self.whopays.pack()
     
     text_comment = tk.StringVar()
@@ -221,9 +224,10 @@ class ADD_GUI:
       current_expense.amount = float(current_expense.amount_string)
     self.update_summary()
 
-  def update_ipf(self):
+  def update_ipf(self,_value):
     global current_expense
-    current_expense.ipf = self.ipf.get()
+    #current_expense.ipf = self.ipf.get()
+    current_expense.ipf = _value
     self.update_summary()
 
 
@@ -232,8 +236,10 @@ class ADD_GUI:
     self.category_label['text']=f'category: {current_expense.category}'
     self.item_label['text']=f'Item: {current_expense.item}'
     self.amount_label['text']=f'Amount: {current_expense.amount:.2f} GPB'
-    if self.ipf.get() == 1 : self.ipf_label['text']=f'Paid by: {defaults.name1}'
-    if self.ipf.get() == 0 : self.ipf_label['text']=f'Paid by: {defaults.name2}'
+    #if self.ipf.get() == 1 : self.ipf_label['text']=f'Paid by: {defaults.name1}'
+    #if self.ipf.get() == 0 : self.ipf_label['text']=f'Paid by: {defaults.name2}'
+    if current_expense.ipf == 1 : self.ipf_label['text']=f'Paid by: {defaults.name1}'
+    if current_expense.ipf == 0 : self.ipf_label['text']=f'Paid by: {defaults.name2}'
    
   def clear_expense(self):
     global current_expense
@@ -244,7 +250,7 @@ class ADD_GUI:
    
   def add_expense_to_list(self):
     global current_expense
-    current_expense.ipf = self.ipf.get()
+    #current_expense.ipf = self.ipf.get()
     current_expense.comment = self.entry_comment.get()
     should_add = current_expense.prepare_to_save()
     print(current_expense)

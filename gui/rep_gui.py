@@ -3,7 +3,6 @@ from datetime import datetime
 from expensetracker.xp.expense import Expense
 from expensetracker.xp.defaults import items
 from expensetracker.xp.functions import load_sqlsession,get_unpaid_data
-from matplotlib import pyplot as plt
 
 
 class REP_GUI():
@@ -60,6 +59,7 @@ class REP_GUI():
     label_val.grid(row=i,column=1,sticky=tk.E)
 
   def plot_pie_chart(self,X,Y):
+    from matplotlib import pyplot as plt
     fig, ax = plt.subplots()
     explode = [0.0 for i in X]
     explode[0] = 0.1
