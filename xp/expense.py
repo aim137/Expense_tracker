@@ -1,5 +1,5 @@
 import datetime
-import defaults
+from expensetracker.xp import defaults
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import Column, String, Integer, Float, Boolean
@@ -96,4 +96,4 @@ class Expense(Base):
     #and now add to the df
 
   def __repr__(self):
-    return f'{self.category.ljust(13)} {self.item.ljust(13)} : {self.amount: 8.2f} GBP paid by {self.name.ljust(10)} on {self.date.ljust(13)}- Net={self.balance: 8.2f} GBP Paid={self.is_paid} Comment={self.comment}'
+    return f'{self.category.ljust(13)} {self.item.ljust(13)} : {self.amount: 8.2f} GBP paid by {self.name.ljust(10)} on {str(self.date).ljust(13)}- Net={self.balance: 8.2f} GBP Paid={self.is_paid} Comment={self.comment}'

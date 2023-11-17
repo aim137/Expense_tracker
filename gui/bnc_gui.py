@@ -1,7 +1,7 @@
 import tkinter as tk
-from expense import Expense
-import defaults
-from functions import load_sqlsession
+from expensetracker.xp.expense import Expense
+from expensetracker.xp import defaults
+from expensetracker.xp.functions import load_sqlsession
 from tkinter.messagebox import showinfo
 
 
@@ -10,7 +10,7 @@ class BNC_GUI():
   def __init__(self):
     
     self.root = tk.Tk()
-    self.root.geometry("469x375")
+    self.root.geometry("469x230")
     self.root.title("Calculate balance")
 
     self.session = load_sqlsession()

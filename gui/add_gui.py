@@ -1,11 +1,10 @@
 import tkinter as tk
-import expense
-import defaults
-from expense import Expense
-from functions import load_sqlsession
+import expensetracker.xp.expense as xp
+from expensetracker.xp import defaults
+from expensetracker.xp.functions import load_sqlsession
 from tkinter.messagebox import showinfo
 
-current_expense = Expense()
+current_expense = xp.Expense()
 
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 class ADD_GUI:
@@ -251,7 +250,7 @@ class ADD_GUI:
     print(current_expense)
     if should_add:
       self.list_of_expenses.append(current_expense)
-      current_expense = Expense(category=current_expense.category)
+      current_expense = xp.Expense(category=current_expense.category)
       self.update_summary()
       self.entry_comment.delete(0,"end")
     else:
