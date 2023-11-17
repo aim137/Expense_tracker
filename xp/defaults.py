@@ -1,6 +1,7 @@
 name1 = "Gary"
 name2 = "Karen"
 db_name = "expenses_database.db"
+db_path = "."
 
 default_bills = (
 'Rent/Mortgage',
